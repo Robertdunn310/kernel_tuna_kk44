@@ -35,6 +35,7 @@
 #include <mach/emif.h>
 #include <mach/lpddr2-elpida.h>
 #include <mach/dmm.h>
+#include <mach/omap4_ion.h>
 
 #include <asm/mach-types.h>
 #include <asm/mach/arch.h>
@@ -47,8 +48,8 @@
 #include <plat/mmc.h>
 #include <plat/remoteproc.h>
 #include <video/omap-panel-generic-dpi.h>
-#include "timer-gp.h"
 
+#include "timer-gp.h"
 #include "hsmmc.h"
 #include "control.h"
 #include "mux.h"
@@ -62,13 +63,6 @@
 #define HDMI_GPIO_LS_OE 41 /* Level shifter for HDMI */
 #define HDMI_GPIO_HPD  63 /* Hotplug detect */
 
-
-#define PHYS_ADDR_SMC_SIZE	(SZ_1M * 3)
-#define PHYS_ADDR_SMC_MEM	(0x80000000 + SZ_1G - PHYS_ADDR_SMC_SIZE)
-#define OMAP_ION_HEAP_SECURE_INPUT_SIZE	(SZ_1M * 90)
-#define PHYS_ADDR_DUCATI_SIZE	(SZ_1M * 105)
-#define PHYS_ADDR_DUCATI_MEM	(PHYS_ADDR_SMC_MEM - PHYS_ADDR_DUCATI_SIZE - \
-				OMAP_ION_HEAP_SECURE_INPUT_SIZE)
 
 /* wl127x BT, FM, GPS connectivity chip */
 static int wl1271_gpios[] = {46, -1, -1};
@@ -700,6 +694,7 @@ static void __init omap4_panda_init(void)
 		pr_err("error setting wl12xx data\n");
 
 	omap4_panda_i2c_init();
+	omap4_register_ion();
 	omap4_audio_conf();
 	platform_add_devices(panda_devices, ARRAY_SIZE(panda_devices));
 /*
@@ -726,12 +721,18 @@ static void __init omap4_panda_map_io(void)
 
 static void __init omap4_panda_reserve(void)
 {
+	omap_init_ram_size();
+
 	/* do the static reservations first */
 	memblock_remove(PHYS_ADDR_SMC_MEM, PHYS_ADDR_SMC_SIZE);
 	memblock_remove(PHYS_ADDR_DUCATI_MEM, PHYS_ADDR_DUCATI_SIZE);
 	/* ipu needs to recognize secure input buffer area as well */
 	omap_ipu_set_static_mempool(PHYS_ADDR_DUCATI_MEM, PHYS_ADDR_DUCATI_SIZE +
-					OMAP_ION_HEAP_SECURE_INPUT_SIZE);
+					OMAP4_ION_HEAP_SECURE_INPUT_SIZE);
+
+#ifdef CONFIG_ION_OMAP
+	omap_ion_init();
+#endif
 
 	omap_reserve();
 }
