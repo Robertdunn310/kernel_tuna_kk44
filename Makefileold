@@ -350,8 +350,8 @@ CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 CFLAGS_MODULE   = -fno-pic
 AFLAGS_MODULE   =
 LDFLAGS_MODULE  =
-CFLAGS_KERNEL	= -march=armv7-a -mtune=cortex-a9 -marm -mcpu=cortex-a9 -mfpu=neon -mfloat-abi=soft -mvectorize-with-neon-quad -ffast-math
-AFLAGS_KERNEL	= -march=armv7-a -mtune=cortex-a9 -marm -mcpu=cortex-a9 -mfpu=neon -mfloat-abi=soft -mvectorize-with-neon-quad -ffast-math
+CFLAGS_KERNEL	=
+AFLAGS_KERNEL	=
 CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
 
@@ -376,8 +376,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
                    -fsched-spec-load -fforce-addr \
 	           -funswitch-loops -fpredictive-commoning -fgcse-after-reload \
                    -fno-delete-null-pointer-checks -pipe -funroll-loops -fvariable-expansion-in-unroller \
-                   -fprofile-correction -mvectorize-with-neon-quad -ftree-vectorize -ftree-parallelize-loops=2 \
-                   -flto -fno-toplevel-reorder -fuse-linker-plugin -DNDEBUG                    
+                   -fprofile-correction -mvectorize-with-neon-quad 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
