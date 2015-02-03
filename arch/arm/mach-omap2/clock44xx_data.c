@@ -3551,7 +3551,7 @@ static struct omap_clk omap44xx_clks[] = {
 	CLK("omap_timer.8",	"sys_ck",	&syc_clk_div_ck,	CK_44XX),
 };
 
-#define L3_OPP50_RATE			100000000
+#define L3_OPP50_RATE			102000000
 #define DPLL_CORE_M2_OPP50_RATE		400000000
 #define DPLL_CORE_M2_OPP100_RATE	800000000
 #define DPLL_CORE_M3_OPP50_RATE		200000000
