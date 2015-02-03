@@ -377,7 +377,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 	           -funswitch-loops -fpredictive-commoning -fgcse-after-reload \
                    -fno-delete-null-pointer-checks -pipe -funroll-loops -fvariable-expansion-in-unroller \
                    -fprofile-correction -mvectorize-with-neon-quad -ftree-vectorize -ftree-parallelize-loops=2 \
-                   -flto -fno-toplevel-reorder -fuse-linker-plugin -DNDEBUG                    
+                   -flto -fno-toplevel-reorder -fuse-linker-plugin -fipa-cp-clone -DNDEBUG                    
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
